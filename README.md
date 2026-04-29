@@ -4,6 +4,9 @@ This repository packages Keikai Spreadsheet for iDempiere using the OSGi fragmen
 
 It is created for the local iDempiere 13 workspace at `/Users/jameschu/zkworks/idempiere-13` and targets Keikai `6.3.0-Eval`.
 
+This plugin structure follows the ZKoss iDempiere EE plugin guide:
+[IDEMPIERE_NEW_PLUGIN_GUIDE.md](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin/blob/main/docs/IDEMPIERE_NEW_PLUGIN_GUIDE.md).
+
 ## Modules
 
 | Module | Purpose |
