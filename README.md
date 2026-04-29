@@ -1,8 +1,8 @@
-# ZKoss Keikai Plugin for iDempiere
+# ZKoss Keikai EE Eval Plugin for iDempiere
 
-This repository packages Keikai Spreadsheet for iDempiere using the OSGi fragment + plugin pattern.
+This repository packages the Keikai EE Eval version of Keikai Spreadsheet for iDempiere using the OSGi fragment + plugin pattern.
 
-It is created for the local iDempiere 13 workspace at `/Users/jameschu/zkworks/idempiere-13` and targets Keikai `6.3.0-Eval`.
+It is created for the local iDempiere 13 workspace at `/Users/jameschu/zkworks/idempiere-13` and targets Keikai EE Eval `6.3.0-Eval`.
 
 This plugin structure follows the ZKoss iDempiere EE plugin guide:
 [IDEMPIERE_NEW_PLUGIN_GUIDE.md](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin/blob/main/docs/IDEMPIERE_NEW_PLUGIN_GUIDE.md).
@@ -24,9 +24,9 @@ The local iDempiere 13 core currently declares:
 | Tycho | `4.0.8` |
 | Java execution environment | `JavaSE-17` |
 | ZK CE in iDempiere | `10.0.1` |
-| Keikai target | `6.3.0-Eval` with `keikai-ex` and `keikai-pdf` |
+| Keikai target | Keikai EE Eval `6.3.0-Eval` with `keikai-ex` and `keikai-pdf` |
 
-Keikai `6.3.0-Eval` declares ZK `10.3.0.1-Eval` in its parent POM, while this iDempiere workspace ships ZK `10.0.1`. The plugin uses the ZK `10.0.1-Eval` `zkex` jar to stay aligned with the iDempiere ZK host. Runtime compatibility still needs to be verified in the server.
+This plugin is intentionally built with Keikai EE Eval artifacts, not Keikai CE artifacts or production-licensed EE artifacts. Keikai EE Eval `6.3.0-Eval` declares ZK `10.3.0.1-Eval` in its parent POM, while this iDempiere workspace ships ZK `10.0.1`. The plugin uses the ZK `10.0.1-Eval` `zkex` jar to stay aligned with the iDempiere ZK host. Runtime compatibility still needs to be verified in the server.
 
 The `keikai-ex` jar is included because the base Keikai jar marks some toolbar actions, such as Save Book, as available only in Keikai EE. The optional `keikai-pdf` jar and its `openpdf` dependency are included so `Exporters.getExporter("pdf")` can provide the native Keikai PDF exporter. The fragment registers the PDF exporter with `pdf=io.keikai.model.impl.pdf.PdfExporterFactory` in `src/metainfo/zk/zk.xml`.
 
