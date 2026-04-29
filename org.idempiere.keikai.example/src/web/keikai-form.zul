@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<div hflex="1" vflex="1" style="height: 100%; width: 100%;">
+		<spreadsheet id="spreadsheet" hflex="1" vflex="1" src="web/blank.xlsx"
+			showToolbar="true" showFormulabar="true" showContextMenu="true"
+			maxVisibleRows="100" maxVisibleColumns="40" />
+	</div>
+</zk>

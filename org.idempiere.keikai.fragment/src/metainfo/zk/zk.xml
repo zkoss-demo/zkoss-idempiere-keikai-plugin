@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<!-- Required for iDempiere 13 with ZK Max 10.
+	     iDempiere sends login echo events to an initially invisible AdempiereWebUI window. -->
+	<library-property>
+		<name>org.zkoss.zkmax.au.IWBS.disable</name>
+		<value>true</value>
+	</library-property>
+	<library-property>
+		<name>io.keikaiex.model.default.ExporterFactory.class</name>
+		<value>pdf=io.keikai.model.impl.pdf.PdfExporterFactory</value>
+	</library-property>
+</zk>

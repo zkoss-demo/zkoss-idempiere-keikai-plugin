@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Keikai Spreadsheet Example
+Bundle-SymbolicName: org.idempiere.keikai.example
+Bundle-Version: 13.0.0.qualifier
+Bundle-Vendor: iDempiere Community
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.adempiere.base;bundle-version="13.0.0",
+ org.adempiere.plugin.utils;bundle-version="13.0.0",
+ org.adempiere.ui.zk;bundle-version="13.0.0",
+ org.adempiere.ui;bundle-version="13.0.0",
+ org.idempiere.zk.extra;bundle-version="13.0.0",
+ zcommon;bundle-version="10.0.1",
+ zel;bundle-version="10.0.1",
+ zhtml;bundle-version="10.0.1",
+ zk;bundle-version="10.0.1",
+ zkbind;bundle-version="10.0.1",
+ zkplus;bundle-version="10.0.1",
+ zul;bundle-version="10.0.1",
+ zweb;bundle-version="10.0.1"
+Import-Package: org.osgi.framework;version="[1.10.0,2.0.0]",
+ org.osgi.service.component.annotations;version="1.5.1"
+Service-Component: OSGI-INF/org.idempiere.keikai.example.MyActivator.xml
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.idempiere.keikai.example.MyActivator
+Automatic-Module-Name: org.idempiere.keikai.example
