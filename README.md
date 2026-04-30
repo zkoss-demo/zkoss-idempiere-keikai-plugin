@@ -7,6 +7,17 @@ It is created for the local iDempiere 13 workspace at `/Users/jameschu/zkworks/i
 This plugin structure follows the ZKoss iDempiere EE plugin guide:
 [IDEMPIERE_NEW_PLUGIN_GUIDE.md](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin/blob/main/docs/IDEMPIERE_NEW_PLUGIN_GUIDE.md).
 
+## Creation Notes
+
+This plugin was generated from the generic iDempiere ZK EE / addon plugin pattern, with Keikai-specific module inputs. Keikai is not a single-addon-jar case: the fragment must include the base Keikai runtime plus feature modules such as `keikai-ex` and `keikai-pdf`.
+
+When recreating or updating this plugin with an AI agent, provide the required Keikai modules explicitly and keep the module list synchronized across:
+
+- `org.idempiere.keikai.fragment/pom.xml` dependency-copy artifacts
+- `org.idempiere.keikai.fragment/META-INF/MANIFEST.MF` `Bundle-ClassPath`
+- `org.idempiere.keikai.fragment/build.properties` `bin.includes`
+- `org.idempiere.keikai.fragment/src/metainfo/zk/zk.xml` for Keikai-specific ZK library properties such as the PDF exporter
+
 ## Modules
 
 | Module | Purpose |
