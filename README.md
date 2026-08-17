@@ -72,3 +72,20 @@ Install both generated jars into the iDempiere OSGi runtime:
 The fragment should resolve against `org.adempiere.ui.zk`; the example plugin should become active and import its `META-INF/2Pack_*.zip` registration.
 
 After changing fragment jars or `src/metainfo/zk/zk.xml`, restart the iDempiere web application or OSGi runtime. ZK reads library properties during webapp initialization, so the PDF exporter registration is not reliably picked up by hot-swapping only the example bundle.
+
+---
+
+## See also
+
+Three repositories bring ZK commercial products into iDempiere. All three use the same
+OSGi **fragment + plugin** pattern; they differ only in which jars the fragment carries.
+
+| Repository | Brings in | Start there when you want |
+|---|---|---|
+| **This repository** | Keikai Spreadsheet (`keikai`, `keikai-ex`, `keikai-pdf`) | An Excel-compatible spreadsheet inside an iDempiere form |
+| [zkoss-idempiere-ee-plugin](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin) | ZK EE (`zkex`, `zkmax`, `client-bind`, `zuti`, `za11y`) | The general ZK EE component set. Its [new-plugin guide](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin/blob/main/docs/IDEMPIERE_NEW_PLUGIN_GUIDE.md) is the pattern this repository was generated from |
+| [zkoss-idempiere-zkcharts-plugin](https://github.com/zkoss-demo/zkoss-idempiere-zkcharts-plugin) | ZK Charts, ZK Pivottable | Charts and pivot tables - including replacing iDempiere's built-in chart rendering globally. Its README also documents the OSGi class-loader pitfalls a ZK component hits when it loads its own ZUL |
+
+The three fragments target the same host bundle, `org.adempiere.ui.zk`, and can be
+installed side by side - OSGi allows a host any number of fragments. Each still needs its
+own restart to attach.
