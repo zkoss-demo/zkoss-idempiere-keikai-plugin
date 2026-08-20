@@ -62,6 +62,9 @@ The fragment should resolve against `org.adempiere.ui.zk`; the example plugin sh
 
 After changing fragment jars or `src/metainfo/zk/zk.xml`, restart the iDempiere web application or OSGi runtime. ZK reads library properties during webapp initialization, so the PDF exporter registration is not reliably picked up by hot-swapping only the example bundle.
 
+For the other ways to get a bundle into a runtime - p2 repository, Gogo shell, dropping it into
+the plugins directory - see iDempiere's [Distributing and Installing Plug-ins](https://docs.idempiere.org/docs/basic-development/plugin-development/distributing-plugins).
+
 To build the jars yourself instead, see [Building from source](#building-from-source) below.
 
 ---
