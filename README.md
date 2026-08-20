@@ -43,7 +43,33 @@ The `keikai-ex` jar is included because the base Keikai jar marks some toolbar a
 
 The example uses `Executions.createComponents("~./keikai-form.zul", ...)` for ZUL loading, matching the usual iDempiere form pattern. The spreadsheet workbook uses `src="web/blank.xlsx"` instead of `~./blank.xlsx` because Keikai resolves `Spreadsheet.setSrc()` through its workbook loader, not through the same ZK component-creation path.
 
-## Build
+## Installing
+
+You need a running iDempiere 13 instance - for example the
+[official Docker image](https://hub.docker.com/r/idempiereofficial/idempiere).
+
+Prebuilt jars are attached to each [release](https://github.com/zkoss-demo/zkoss-idempiere-keikai-plugin/releases), so nothing has to be built to try the
+plugin:
+
+| File | Purpose |
+|---|---|
+| `org.idempiere.keikai.fragment-13.0.0.jar` | The Keikai fragment. **Required.** |
+| `org.idempiere.keikai.example-13.0.0.jar` | The example form. Optional. |
+
+Install both into the iDempiere OSGi runtime, the fragment first.
+
+The fragment should resolve against `org.adempiere.ui.zk`; the example plugin should become active and import its `META-INF/2Pack_*.zip` registration.
+
+After changing fragment jars or `src/metainfo/zk/zk.xml`, restart the iDempiere web application or OSGi runtime. ZK reads library properties during webapp initialization, so the PDF exporter registration is not reliably picked up by hot-swapping only the example bundle.
+
+To build the jars yourself instead, see [Building from source](#building-from-source) below.
+
+---
+
+## Building from source
+
+Only needed if you want to change the code. To install and try the plugin, download the jars
+attached to a release, as described under [Installing](#installing).
 
 Build from the repository root:
 
@@ -62,16 +88,17 @@ rg 'lib/.*\.jar' META-INF/MANIFEST.MF build.properties
 
 Every jar in `Bundle-ClassPath` must exist under `lib/`.
 
-## Runtime
+### Publishing a release
 
-Install both generated jars into the iDempiere OSGi runtime:
+`./make-release.sh` collects every built jar into a local `release/` folder, dropping the
+`-SNAPSHOT` from the file name. That folder is git-ignored: upload its contents as attachments
+on the GitHub release page rather than committing them.
 
-- `org.idempiere.keikai.fragment/target/org.idempiere.keikai.fragment-13.0.0-SNAPSHOT.jar`
-- `org.idempiere.keikai.example/target/org.idempiere.keikai.example-13.0.0-SNAPSHOT.jar`
-
-The fragment should resolve against `org.adempiere.ui.zk`; the example plugin should become active and import its `META-INF/2Pack_*.zip` registration.
-
-After changing fragment jars or `src/metainfo/zk/zk.xml`, restart the iDempiere web application or OSGi runtime. ZK reads library properties during webapp initialization, so the PDF exporter registration is not reliably picked up by hot-swapping only the example bundle.
+The file name comes from the Maven version, which stays `13.0.0-SNAPSHOT`; the version OSGi
+actually uses is the `Bundle-Version` inside the jar, where `.qualifier` has been expanded to
+a build timestamp such as `13.0.0.202608190118`. Every build therefore gets a distinct OSGi
+version - Felix sees a rebuild as newer and updates it - while the published file stays
+`...-13.0.0.jar`.
 
 ---
 
@@ -86,6 +113,7 @@ OSGi **fragment + plugin** pattern; they differ only in which jars the fragment 
 | [zkoss-idempiere-ee-plugin](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin) | ZK EE (`zkex`, `zkmax`, `client-bind`, `zuti`, `za11y`) | The general ZK EE component set. Its [new-plugin guide](https://github.com/zkoss-demo/zkoss-idempiere-ee-plugin/blob/main/docs/IDEMPIERE_NEW_PLUGIN_GUIDE.md) is the pattern this repository was generated from |
 | [zkoss-idempiere-zkcharts-plugin](https://github.com/zkoss-demo/zkoss-idempiere-zkcharts-plugin) | ZK Charts, ZK Pivottable | Charts and pivot tables - including replacing iDempiere's built-in chart rendering globally. Its README also documents the OSGi class-loader pitfalls a ZK component hits when it loads its own ZUL |
 
-The three fragments target the same host bundle, `org.adempiere.ui.zk`, and can be
-installed side by side - OSGi allows a host any number of fragments. Each still needs its
-own restart to attach.
+The three fragments target the same host bundle, `org.adempiere.ui.zk`. OSGi allows a host
+any number of fragments, so they can be installed side by side - but check for overlap
+first: the Keikai fragment carries its own `zkex` and `zkcharts`, and not necessarily at
+the same versions as the other two fragments ship. Each fragment needs a restart to attach.
