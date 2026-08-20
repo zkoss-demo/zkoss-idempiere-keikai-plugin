@@ -100,6 +100,45 @@ a build timestamp such as `13.0.0.202608190118`. Every build therefore gets a di
 version - Felix sees a rebuild as newer and updates it - while the published file stays
 `...-13.0.0.jar`.
 
+## License
+
+**The plugin source code** in this repository is licensed under the
+[GNU General Public License v2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) or
+later, the same license iDempiere itself uses. See [LICENSE.md](LICENSE.md).
+
+**The source tree contains no Keikai or ZK binaries.** The fragment declares them as Maven
+dependencies; the build downloads them from ZK's Evaluation repository into a git-ignored `lib/`.
+
+**The released jars are a different matter.** A fragment's whole job is to put those jars on the
+host bundle's class loader, so the built fragment embeds all of them:
+
+| Released jar | Contains | Redistributable under the GPL? |
+|---|---|---|
+| `org.idempiere.keikai.example` | Only this project's own compiled code | Yes - GPLv2 or later |
+| `org.idempiere.keikai.fragment` | 28 jars, ~54 MB: **Keikai EE Evaluation** and `zkex` / `zkcharts` Evaluation, plus Apache POI, `openpdf`, `jfreechart` and other third-party libraries | **No** - the Keikai and ZK jars are governed by ZK's license, not the GPL; the rest keep their own open-source licenses |
+
+| Component | License |
+|---|---|
+| This project's source and its own compiled bundle | GPLv2 or later |
+| [Keikai](https://keikai.io/) EE (`keikai`, `keikai-ex`, `keikai-pdf`, `keikai-model`) | Commercial - Evaluation builds are used here |
+| `zkex`, `zkcharts` | Commercial - carried by the fragment because Keikai needs them |
+| Apache POI (`io.keikai:poi`), `openpdf`, `jfreechart`, `commons-*`, `xmlbeans`, `jsoup`, `byte-buddy` and the rest | Their own open-source licenses, redistributed unmodified - **itemized in [THIRD-PARTY.md](THIRD-PARTY.md)** |
+| ZK CE (in iDempiere) | LGPL - already part of iDempiere, unchanged by this plugin |
+
+[THIRD-PARTY.md](THIRD-PARTY.md) lists every embedded jar with its coordinates, size and license,
+and is regenerated from the built `lib/` by `./make-third-party.py`. `make-release.sh` copies it,
+and `LICENSE.md`, into `release/` so both travel with the jars. Three of the embedded libraries -
+`jfreechart`, `jcommon` and `openpdf` - are **LGPL**, which attaches obligations that Apache-2.0
+and MIT do not; see the note at the end of that file before publishing a release publicly.
+
+**What you may do with a downloaded fragment.** Install it and evaluate it. The Evaluation
+binaries inside are provided for evaluation only: they are not yours to redistribute, and a valid
+Keikai EE license or subscription is required before use in production. Contact
+<info@zkoss.org>.
+
+**One caveat when backing out.** Removing the fragment leaves iDempiere core untouched, but any
+form *you* wrote against the spreadsheet component stops working with it.
+
 ---
 
 ## See also

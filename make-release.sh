@@ -9,6 +9,11 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 rm -rf release && mkdir -p release
+
+# the fragment embeds ~29 third-party and commercial jars; ship the inventory beside it
+./make-third-party.py >/dev/null
+cp THIRD-PARTY.md LICENSE.md release/
+
 found=0
 for jar in */target/*.jar; do
     case "$jar" in *-sources.jar) continue ;; esac
